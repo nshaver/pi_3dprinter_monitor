@@ -4,9 +4,12 @@ curses-based 3d printer monitor
 The start_monitor.sh script creates tmux windows that display two different 3d printer statuses, with a raspberry pi status on the button line.
 
 To make it run automatically upon login, add this to the bottom of ~/.bashrc
+
+```
 if [[ -z "$TMUX" ]]; then
     bash ~/your_script_name.sh
 fi
+```
 
 Use raspi-config display options to disable screen blanking.
 
