@@ -29,11 +29,13 @@ tmux set-option -g status-right "\
 #[fg=magenta,bold]CPU: #(awk '{printf \"%%d%%%%\", \$1*25}' /proc/loadavg) #[fg=white]| \
 #[fg=cyan,bold]#(vcgencmd measure_temp | cut -d= -f2) #[fg=white]| \
 #(STATUS=\$(vcgencmd get_throttled | cut -d= -f2); \
-  if [ \$((STATUS & 0x50005)) -eq 0 ]; then echo '#[fg=green]PWR:OK'; \
-  else echo '#[fg=red,bold]PWR:LOW'; fi) #[fg=white]| \
-#(STATUS=\$(vcgencmd get_throttled | cut -d= -f2); \
-  if [ \$((STATUS & 0x20002)) -eq 0 ]; then echo '#[fg=green]TMP:OK'; \
-  else echo '#[fg=red,bold]TMP:HOT'; fi) #[fg=white]| \
+  if [ \$((STATUS & 0x5)) -ne 0 ]; then \
+    echo '#[fg=red,bold,blink]PWR:LOW'; \
+  elif [ \$((STATUS & 0x50000)) -ne 0 ]; then \
+    echo '#[fg=yellow]PWR:OK'; \
+  else \
+    echo '#[fg=green]PWR:OK'; \
+  fi) #[fg=white]| \
 %H:%M:%S"
 
 # 4. Launch Printer 1 (Top Pane)
